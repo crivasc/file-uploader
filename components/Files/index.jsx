@@ -6,6 +6,7 @@ import Stack from '@mui/material/Stack'
 import IconButton from '@mui/material/IconButton'
 import CircularProgress from '@mui/material/CircularProgress'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
+import CancelIcon from '@mui/icons-material/Cancel';
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import styles from './Files.module.css'
@@ -25,6 +26,7 @@ const Files = () => {
     }, []);
 
     const [Mensajes, setMensajes] = useState('')
+    const [ShowP, setShowP] = useState(false)
     const [Preview, setPreview] = useState([])
     const [Preload, setPreload] = useState(false)
 
@@ -35,7 +37,7 @@ const Files = () => {
     const trae=()=>{
         setPreview([])
         ets().then(res=>{
-            !res.assets.length ? setPreview([]) : setPreview(res.assets[0].path) 
+            res.assets.length && setPreview(res.assets[0].path)
         })
     }
     useEffect(() => {
@@ -44,7 +46,7 @@ const Files = () => {
     
 
     const handleChange = event => {
-
+        setShowP(false)
         if (event.target.files) {
             setPreload(true)
             const pic = event.target.files[0];
@@ -57,14 +59,14 @@ const Files = () => {
                 "Content-Type": "multipart/form-data",
                 },
                 onUploadProgress: (progressEvent) => {
-                const progress = (progressEvent.loaded / progressEvent.total) * 100;
+                    const progress = (progressEvent.loaded / progressEvent.total) * 100;
 
-                console.log(progress);
                     progress==100 && setPreload(false)
                     setProgress(progress)
                 }
             }).then(res=>{
                 trae()
+                setShowP(true)
             }).catch(error=>'Error:'+error)
         }
     };
@@ -73,6 +75,11 @@ const Files = () => {
     const handleClick = event => {
         hiddenFileInput.current.click();
     };
+    const clearer=()=>{
+        setPreview([])
+        setShowP(false)
+    }
+
   return (
     <div className={styles.formContainer}>
         <input className={styles.hiddenInput} type="file"
@@ -106,11 +113,17 @@ const Files = () => {
                     <CloudUploadIcon sx={{fontSize:'2em'}}/>
                 </IconButton>
         }
-        <div className={styles.previewStyle}>
-        {Preview.length ? <img src={`${mainUrl}storage/uploads${Preview}?token=${TOKEN}`} 
-            width={100}/> : <></>
+        
+        {ShowP ? 
+            <div className={styles.previewStyle}>
+                <IconButton onClick={clearer} className={styles.closer}>
+                    <CancelIcon sx={{fontSize:'2em'}}/>
+                </IconButton>
+                <img src={`${mainUrl}storage/uploads${Preview}?token=${TOKEN}`} width={300}/>
+            </div> 
+            : <></>
         }
-        </div>
+        
         <span>{Mensajes}</span>
     </div>          
   )

@@ -3,8 +3,9 @@
 }
 .formContainer{
     position:relative;
-    display:grid;
+    display:flex;
     align-items: center;
+    justify-content: center;
     margin:auto;
     width:80%;
     min-width:400px;
@@ -36,6 +37,21 @@
     justify-content: center;
 }
 .previewStyle{
+    position: relative;
+    padding:5px;
+    border:dotted 2px slategray;
+    border-radius:15px;
     width:400px;
-    margin:auto
+    margin:1em auto;
+    text-align:center;
+}
+.closer{
+    position:absolute;
+    right:-13px;
+    top:-13px;
+    color:darkred;
+    transition: all .2s ease-in-out;
+}
+.closer:hover{
+    color: red;
 }
