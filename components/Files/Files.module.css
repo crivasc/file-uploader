@@ -1,0 +1,41 @@
+.hiddenInput{
+    display:none
+}
+.formContainer{
+    position:relative;
+    display:grid;
+    align-items: center;
+    margin:auto;
+    width:80%;
+    min-width:400px;
+}
+.sender{
+    width:180px;
+    height:100px;
+    margin:auto;
+    background: white;
+    outline: none;
+    padding:1em;
+    font-size:2rem;
+    border:solid 2px #219b9b;
+    border-radius:15px;
+    color:#219b9b;
+    transition: all .2s ease-in-out;
+}
+.sender:hover{
+    background: #fff;
+    /*color:#219b9b;*/
+    color:#136464;
+}
+.progBar{
+    width:80px;
+    height:80px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.previewStyle{
+    width:400px;
+    margin:auto
+}
